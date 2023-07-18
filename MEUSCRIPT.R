@@ -200,6 +200,8 @@ c3
 #DEFININDO AREA DE TRABALHO 
 #getwd("xxxxxx") - lembrar de ajeitar as barras do link da localização
 
+#
+
 
 
 
