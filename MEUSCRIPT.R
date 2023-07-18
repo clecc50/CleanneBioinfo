@@ -160,14 +160,7 @@ c3
 
 #ideia de tiras, porém acho q precisa de mais dados..
 
-
 #como coloca legenda? e como muda a bolinha p outra forma geometrica?
-
-#------------
-
-
-#------------------
-
 #-------chamando funções: df+ as.dataframe(expres(xxxxx))
 #-------- geom_bar para barras, medida de frequencia
 
@@ -200,10 +193,94 @@ c3
 #DEFININDO AREA DE TRABALHO 
 #getwd("xxxxxx") - lembrar de ajeitar as barras do link da localização
 
-#
+
+#........relembrando
+
+c1=ggplot(falcon) +
+  geom_col(aes(x=tempo, y=temperature)) + 
+  theme(axis.title = element_text(size = 15,face = "bold"),
+        axis.text = element_blank()) +
+  theme(panel.background = element_rect(fill  = "pink"),
+        panel.grid = element_line(colour='blue'))
+c1
+
+# P/ CASA 18.07
+
+#modelo
+p1 <- data_group %>%
+  ggplot(aes(x=type, hsamiR92a3p, fill=type))+
+  labs(title="hsa-miR92a-3p", x=NULL, y="Relative miRNA Expression")+
+  geom_boxplot(show.legend = F, outlier.shape = NA, 
+               alpha=0.3, width=0.6, coef=0)+
+  geom_point(aes(colour=factor(type), 
+                 fill = factor(type)), shape=21, size = 3, alpha = .7,
+             show.legend = F,position=position_jitter(width=0.15))+
+  scale_x_discrete(breaks = c("Control","BrS","ARVC"), 
+                   labels = c(glue("Control 
+                                   (N={T0_n})"), 
+                              glue("BrS 
+                                   (N={T1_n})"), 
+                              glue("ARVC 
+                                   (N={T2_n})")))+
+  scale_fill_manual(values=c("seagreen3","coral","#144272"))+
+  scale_colour_manual(values=c("black", "black","black"))+
+  theme(axis.text = element_text(size = 12, color = "black"),
+        axis.title = element_text(size = 14, color = "black"),
+        panel.background = element_rect(fill="white"),
+        axis.line = element_line(color = "black"),
+        plot.title = element_text(size = 16, face = "bold",hjust = 0.5))
+
+compare_means(hsamiR92a3p ~ type, data = data_group, method = "wilcox.test")
+my_comparisons <- list(c("Control","BrS"), c("Control","ARVC"), c("BrS","ARVC"))
+p1 = p1 + stat_compare_means(comparisons = my_comparisons, size=5)
+p1
+
+pdf("hsa-miR92a-3p_allcohor_miRNA.pdf", width = 7, height = 6)
+p1
+dev.off()
+
+#adaptação - fail
+
+library(magrittr)
+
+A1 <- falcon %>%
+  ggplot(aes(x=temperature, tempo, fill=temperature))+
+  labs(title="temperature", x=NULL, y="Tmp de decaimento dos s. nanohibridos")+
+  geom_boxplot(show.legend = F, outlier.shape = NA, 
+               alpha=0.3, width=0.6, coef=0)+
+  geom_point(aes(colour=factor(temperature), 
+                 fill = factor(temperature)), shape=21, size = 3, alpha = .7,
+             show.legend = F,position=position_jitter(width=0.15))+
+  theme(axis.text = element_text(size = 12, color = "black"),
+        axis.title = element_text(size = 14, color = "black"),
+        panel.background = element_rect(fill="white"),
+        axis.line = element_line(color = "black"),
+        plot.title = element_text(size = 16, face = "bold",hjust = 0.5))
+A1
+
+compare_means(hsamiR92a3p ~ type, data = data_group, method = "wilcox.test")
+my_comparisons <- list(c("Control","BrS"), c("Control","ARVC"), c("BrS","ARVC"))
+p1 = p1 + stat_compare_means(comparisons = my_comparisons, size=5)
+p1
+
+pdf("hsa-miR92a-3p_allcohor_miRNA.pdf", width = 7, height = 6)
+p1
+dev.off()
 
 
+#for looping 
 
+#for (variavel in sequencia) {Código a ser executado repetidamente}
+
+for (a in 1:5) {
+  print(a)
+}
+
+for (a in 1:5) {
+  resultado <- a^3
+  print(resultado)
+}
+#peguei a variavel 'a' e calculei o cubo de cada numero
 
 
 
