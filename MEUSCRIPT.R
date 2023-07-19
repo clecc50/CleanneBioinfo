@@ -204,7 +204,27 @@ c1=ggplot(falcon) +
         panel.grid = element_line(colour='blue'))
 c1
 
+#for lopp
+#for (variavel in sequencia) {Código a ser executado repetidamente}
+
+for (a in 1:5) {
+  print(a)
+}
+
+for (a in 1:5) {
+  resultado <- a^3
+  print(resultado)
+}
+#peguei a variavel 'a' e calculei o cubo de cada numero
+
 # P/ CASA 18.07
+
+library(ggplot2)
+library(dplyr)
+install.packages("ggpubr")
+install.packages("glue")
+library(ggpbur)
+
 
 #modelo
 p1 <- data_group %>%
@@ -267,22 +287,4 @@ pdf("hsa-miR92a-3p_allcohor_miRNA.pdf", width = 7, height = 6)
 p1
 dev.off()
 
-
-#for looping 
-
-#for (variavel in sequencia) {Código a ser executado repetidamente}
-
-for (a in 1:5) {
-  print(a)
-}
-
-for (a in 1:5) {
-  resultado <- a^3
-  print(resultado)
-}
-#peguei a variavel 'a' e calculei o cubo de cada numero
-
-
-
-
-
+#criar objeto cores - serve pro meu diagrama de fases - ajuda no loop
