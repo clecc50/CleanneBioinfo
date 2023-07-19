@@ -1,4 +1,4 @@
-#class 11.08 
+#class 
 
 #---------------selecionando e executando o data frame
 
@@ -165,9 +165,8 @@ c3
 #-------- geom_bar para barras, medida de frequencia
 
 
-#----------------- aula 18/07
 
-# REVISÃO
+#-------------- REVISÃO
 
 4*2
 4/2
@@ -194,6 +193,9 @@ c3
 #getwd("xxxxxx") - lembrar de ajeitar as barras do link da localização
 
 
+
+#---------------- LOOP
+
 #........relembrando
 
 c1=ggplot(falcon) +
@@ -217,74 +219,143 @@ for (a in 1:5) {
 }
 #peguei a variavel 'a' e calculei o cubo de cada numero
 
-# P/ CASA 18.07
 
-library(ggplot2)
-library(dplyr)
+
+#---------- 18.07 - BOXPLOT
+
+#MODEL
+
+#-INSTALLATIONS
+
+install.packages("dplyr")
 install.packages("ggpubr")
 install.packages("glue")
-library(ggpbur)
+library(ggplot2)
+library(dplyr)
+library(ggpubr)
+library(glue)
+library(magrittr)
 
+#-VISUALIZATION
 
-#modelo
-p1 <- data_group %>%
-  ggplot(aes(x=type, hsamiR92a3p, fill=type))+
-  labs(title="hsa-miR92a-3p", x=NULL, y="Relative miRNA Expression")+
+View(iris)
+str(iris)
+
+#-OBJECTS
+
+data1 <- iris
+
+T0_n = iris %>% 
+  filter(Sepal.Length == "setosa") %>% 
+  nrow()
+T1_n = iris %>% 
+  filter(Sepal.Length == "virginica") %>% 
+  nrow()
+T2_n = iris %>% 
+  filter(Sepal.Length == "versicolor") %>% 
+  nrow()
+
+iris$Sepal.Length <- factor(iris$Sepal.Length, 
+                           levels = c("setosa","virginica","versicolor"))
+
+names(iris)
+
+b1 <- iris %>%
+  ggplot(aes(x=Species,Sepal.Width, fill=Species))+
+  labs(title="Species", x=NULL, y="Sepal.Width")+
   geom_boxplot(show.legend = F, outlier.shape = NA, 
-               alpha=0.3, width=0.6, coef=0)+
-  geom_point(aes(colour=factor(type), 
-                 fill = factor(type)), shape=21, size = 3, alpha = .7,
+               alpha=0.5, width=0.5, coef=0)+
+  geom_point(aes(colour=factor(Species), 
+                 fill = factor(Species)), shape=21, size = 3, alpha = .7,
              show.legend = F,position=position_jitter(width=0.15))+
-  scale_x_discrete(breaks = c("Control","BrS","ARVC"), 
-                   labels = c(glue("Control 
+  scale_x_discrete(breaks = c("setosa","virginica","versicolor"), 
+                   labels = c(glue("setosa 
                                    (N={T0_n})"), 
-                              glue("BrS 
+                              glue("virginica 
                                    (N={T1_n})"), 
-                              glue("ARVC 
+                              glue("versicolor 
                                    (N={T2_n})")))+
-  scale_fill_manual(values=c("seagreen3","coral","#144272"))+
+  scale_fill_manual(values=c("yellow","pink","purple"))+
   scale_colour_manual(values=c("black", "black","black"))+
   theme(axis.text = element_text(size = 12, color = "black"),
         axis.title = element_text(size = 14, color = "black"),
         panel.background = element_rect(fill="white"),
         axis.line = element_line(color = "black"),
-        plot.title = element_text(size = 16, face = "bold",hjust = 0.5))
+        plot.title = element_text(size = 16, face = "bold",hjust = 0.5)) 
+b1
 
-compare_means(hsamiR92a3p ~ type, data = data_group, method = "wilcox.test")
-my_comparisons <- list(c("Control","BrS"), c("Control","ARVC"), c("BrS","ARVC"))
-p1 = p1 + stat_compare_means(comparisons = my_comparisons, size=5)
-p1
+compare_means(Sepal.Width ~ Species, data = iris, method = "wilcox.test")
+my_comparisons <- list(c("virginica","setosa"), c("virginica","versicolor"), c("setosa","versicolor"))
+b2 = b1 + stat_compare_means(comparisons = my_comparisons, size=5)
 
-pdf("hsa-miR92a-3p_allcohor_miRNA.pdf", width = 7, height = 6)
-p1
-dev.off()
+b2
 
-#adaptação - fail
+#obs: criar objeto cores - serve pro meu diagrama de fases - ajuda no loop
 
-library(magrittr)
 
-A1 <- falcon %>%
-  ggplot(aes(x=temperature, tempo, fill=temperature))+
-  labs(title="temperature", x=NULL, y="Tmp de decaimento dos s. nanohibridos")+
-  geom_boxplot(show.legend = F, outlier.shape = NA, 
-               alpha=0.3, width=0.6, coef=0)+
-  geom_point(aes(colour=factor(temperature), 
-                 fill = factor(temperature)), shape=21, size = 3, alpha = .7,
-             show.legend = F,position=position_jitter(width=0.15))+
-  theme(axis.text = element_text(size = 12, color = "black"),
-        axis.title = element_text(size = 14, color = "black"),
-        panel.background = element_rect(fill="white"),
-        axis.line = element_line(color = "black"),
-        plot.title = element_text(size = 16, face = "bold",hjust = 0.5))
-A1
 
-compare_means(hsamiR92a3p ~ type, data = data_group, method = "wilcox.test")
-my_comparisons <- list(c("Control","BrS"), c("Control","ARVC"), c("BrS","ARVC"))
-p1 = p1 + stat_compare_means(comparisons = my_comparisons, size=5)
-p1
+#-------RANDOM FOREST P/ CLASSIFICAÇÃO 
 
-pdf("hsa-miR92a-3p_allcohor_miRNA.pdf", width = 7, height = 6)
-p1
-dev.off()
+data1 <- iris
 
-#criar objeto cores - serve pro meu diagrama de fases - ajuda no loop
+#-install.packages('xxx')
+
+install.packages("randomForest")
+install.packages("caTools")
+install.packages("caret")
+
+library(randomForest)
+require(caTools)
+library(dplyr)
+library(caret)
+
+iris <- as.data.frame(iris)
+names(iris)
+View(iris)
+
+data_arvc<-read.csv("iris", sep = "\t", header = T)
+
+iris <- as.data.frame(iris, sep = "t", header = T)
+names(iris)
+View(iris)
+
+data=as.data.frame(data_arvc[,c(3,4,7,21)])
+
+data$type[data$type == "non-ARVC"] <- 0
+data$type[data$type == "ARVC"] <- 1
+
+summary(data)
+sapply(data, class)
+data <- transform(data, type=as.factor(type))
+data=na.omit(data)
+
+
+sapply(data, class)
+summary(data)
+
+
+sample = sample.split(data$type, SplitRatio = .70)
+
+train = subset(data, sample == TRUE)
+test  = subset(data, sample == FALSE)
+
+dim(train)
+dim(test)
+
+
+#--------- CREATE A RANDOM FOREST 
+
+rf <- randomForest(x=train[,-4], y=train[,4], ntreeTry=500, mtry=2, importance=F, keep.forest=T)
+
+rf
+plot(rf, main = "Random Forest")
+axis(2)
+importance(rf)
+varImpPlot(rf,bg = "skyblue", cex=1.5, main = "Feature Importance")
+
+#---------- MAKE PREDICTIONS ON TEST DATA s
+
+pred = predict(rf, newdata=test)
+pred
+
+confusionMatrix(table(pred, test$type))
