@@ -29,8 +29,8 @@ ggplot(iris, aes(x=Sepal.Length, y=Species))+
 geom_point ()+
   theme(axis.title = element_text)
 
-#possivel salvar grafico como objeto, só identificar com nome conhecido, tipo P1
-#ex.: p1=ggplot2(iris, aes(x=Sepal.Length, y=Species)) dps so trazer o grafico chamando p1
+    #possivel salvar grafico como objeto, só identificar com nome conhecido, tipo P1
+    #ex.: p1=ggplot2(iris, aes(x=Sepal.Length, y=Species)) dps so trazer o grafico chamando p1
 
 p1=ggplot(iris, aes(x=Sepal.Length, y=Species))+ 
   geom_point ()+
@@ -59,7 +59,7 @@ mean(temperature)
 falcon <- data.frame(tempo, temperature)
 falcon
 
-#DUVIDA: tem como remover o vetor do environment?
+     #DUVIDA: tem como remover o vetor do environment?
 
 
 
@@ -117,8 +117,8 @@ ggplot(falcon) +
   theme(panel.background = element_rect(fill  = "pink"),
         panel.grid = element_line(colour='blue'))
 
-#oq eu fiz de errado acima? a ideia era colorir as colunas..
-#e se eu criasse uma nova coluna pra predizer as cores, chamar ela dentro da aes
+    #oq eu fiz de errado acima? a ideia era colorir as colunas..
+    #e se eu criasse uma nova coluna pra predizer as cores, chamar ela dentro da aes
 
 
 #E
@@ -149,7 +149,7 @@ c2 + theme(axis.text = element_text(colour = "red"))
 
 c2 + theme(axis.title = element_text(size = 8, colour = "yellow"))
 
-#como coloca o titulo no centro?
+       #como coloca o titulo no centro?
 
 #I - strips
 
@@ -158,11 +158,11 @@ c3 <- ggplot(falcon, aes(tempo, temperature)) +
   facet_wrap(aes(class)) 
 c3
 
-#ideia de tiras, porém acho q precisa de mais dados..
+    #ideia de tiras, porém acho q precisa de mais dados..
 
-#como coloca legenda? e como muda a bolinha p outra forma geometrica?
-#-------chamando funções: df+ as.dataframe(expres(xxxxx))
-#-------- geom_bar para barras, medida de frequencia
+    #como coloca legenda? e como muda a bolinha p outra forma geometrica?
+    #-------chamando funções: df+ as.dataframe(expres(xxxxx))
+    #-------- geom_bar para barras, medida de frequencia
 
 
 
@@ -192,10 +192,6 @@ c3
 #DEFININDO AREA DE TRABALHO 
 #getwd("xxxxxx") - lembrar de ajeitar as barras do link da localização
 
-
-
-#---------------- LOOP
-
 #........relembrando
 
 c1=ggplot(falcon) +
@@ -206,8 +202,8 @@ c1=ggplot(falcon) +
         panel.grid = element_line(colour='blue'))
 c1
 
-#for lopp
-#for (variavel in sequencia) {Código a ser executado repetidamente}
+#------- FOR LOOP
+       #for (variavel in sequencia) {Código a ser executado repetidamente}
 
 for (a in 1:5) {
   print(a)
@@ -217,8 +213,15 @@ for (a in 1:5) {
   resultado <- a^3
   print(resultado)
 }
-#peguei a variavel 'a' e calculei o cubo de cada numero
 
+#--transformando em vetor
+          
+x <- c(1:5)
+x
+c(x^3)
+
+          #peguei a variavel 'a' e calculei o cubo de cada numero
+          #pipe - converter objeto em função
 
 
 #---------- 18.07 - BOXPLOT
@@ -290,7 +293,7 @@ b2 = b1 + stat_compare_means(comparisons = my_comparisons, size=5)
 
 b2
 
-#obs: criar objeto cores - serve pro meu diagrama de fases - ajuda no loop
+    #obs: criar objeto cores - serve pro meu diagrama de fases - ajuda no loop
 
 
 
