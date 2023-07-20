@@ -294,9 +294,8 @@ b2
 
 
 
-#-------RANDOM FOREST P/ CLASSIFICAÇÃO 
+#------- MACHINE - RANDOM FOREST P/ CLASSIFICAÇÃO 
 
-data1 <- iris
 
 #-install.packages('xxx')
 
@@ -308,54 +307,45 @@ library(randomForest)
 require(caTools)
 library(dplyr)
 library(caret)
+library(e1071)
+library(ggplot2)
 
-iris <- as.data.frame(iris)
-names(iris)
-View(iris)
+df
+names(df)
+View(df)
 
-data_arvc<-read.csv("iris", sep = "\t", header = T)
-
-iris <- as.data.frame(iris, sep = "t", header = T)
-names(iris)
-View(iris)
-
-data=as.data.frame(data_arvc[,c(3,4,7,21)])
-
-data$type[data$type == "non-ARVC"] <- 0
-data$type[data$type == "ARVC"] <- 1
+data = as.data.frame(df[,c(1:5)])
+#nova variavel possivel pq pelo codigo n tá dando certo..
+data$teste[data$Species == 'versicolor'] <- 0
+data$teste[data$Species == 'setosa'] <- 1
+data$teste[data$Species == 'virginica'] <- 2
 
 summary(data)
 sapply(data, class)
-data <- transform(data, type=as.factor(type))
+data <- transform(data, teste=as.factor(teste))
 data=na.omit(data)
 
-
-sapply(data, class)
-summary(data)
-
-
-sample = sample.split(data$type, SplitRatio = .70)
+sample = sample.split(data$teste, SplitRatio = .7)
 
 train = subset(data, sample == TRUE)
 test  = subset(data, sample == FALSE)
-
 dim(train)
 dim(test)
 
-
 #--------- CREATE A RANDOM FOREST 
 
-rf <- randomForest(x=train[,-4], y=train[,4], ntreeTry=500, mtry=2, importance=F, keep.forest=T)
+rf <- randomForest(x=train[,1:4], y=train[,6], ntreeTry=500, mtry=2, importance=F, keep.forest=T)
 
+#obs.: y train - sexta coluna que antesera especie nominal agr númerica aos codig atribuidos
 rf
 plot(rf, main = "Random Forest")
 axis(2)
 importance(rf)
-varImpPlot(rf,bg = "skyblue", cex=1.5, main = "Feature Importance")
+varImpPlot(rf,bg = "purple", cex=.9, main = "Feature Importance - cleee")
 
 #---------- MAKE PREDICTIONS ON TEST DATA s
 
 pred = predict(rf, newdata=test)
 pred
 
-confusionMatrix(table(pred, test$type))
+confusionMatrix(table(pred, test$teste))
